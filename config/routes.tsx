@@ -1,90 +1,75 @@
-import { SmileOutlined } from '@ant-design/icons'
-import type { RoutesType } from '@/routers/typings'
+import { lazy, Suspense, ReactNode } from 'react'
 import Layout from '@/pages/layout'
-import NoPermission from '@/pages/noPermisson'
-import NoFound from '@/pages/noFound'
+import { Route } from '@ant-design/pro-layout/lib/typings'
+import { SmileOutlined } from '@ant-design/icons'
+import { Navigate } from 'react-router-dom'
 
-/**
- * @description 以下配置将映射出路由和左侧菜单栏数据
- * @description 路由逻辑在 src/routes
- * @description 左侧菜单逻辑在 utils/routersToMenus
- * @description 你可以通过element(不会懒加载)引入页面 也可以通过component(懒加载)
- * @description 请严格遵守 不然容易死循环了
- */
+interface RouteProps extends Route {
+  element?: ReactNode
+  children?: RouteProps[]
+}
 
-// TODO 路由待优化
-export const routes: RoutesType = [
-  {
-    path: '/',
-    redirect: '/home',
-  },
-  {
-    path: '/detail',
-    redirect: '/detail/sub',
-  },
+const Home = lazy(() => import('@/pages/home'))
+const Detail = lazy(() => import('@/pages/detail'))
+const Login = lazy(() => import('@/pages/login'))
+const Jianjian = lazy(() => import('@/pages/jianjian'))
+const Jianjian2 = lazy(() => import('@/pages/jianjian2'))
+
+const lazyLoad = (children: ReactNode): ReactNode => {
+  return <Suspense fallback={<>loading...</>}>{children}</Suspense>
+}
+
+export const routes: RouteProps[] = [
   {
     path: '/',
     element: <Layout />,
     children: [
       {
         path: '/home',
-        icon: <SmileOutlined />,
         name: '首页',
-        component: () => import('@/pages/home'),
-        meta: {
-          access: 'home',
-        },
+        icon: <SmileOutlined />,
+        element: lazyLoad(<Home />),
       },
       {
         path: '/detail',
-        icon: <SmileOutlined />,
         name: '详情',
+        icon: <SmileOutlined />,
+        element: lazyLoad(<Detail />),
+      },
+
+      {
+        path: '/jianjian',
+        name: 'jianjian',
+        icon: <SmileOutlined />,
         children: [
           {
-            path: '/detail/sub',
-            name: '一级页面',
-            icon: <SmileOutlined />,
-            component: () => import('@/pages/detail/index'),
-            meta: {
-              access: 'detail',
-            },
+            path: '/jianjian/1',
+            name: 'jianjian1',
+            element: lazyLoad(<Jianjian />),
           },
           {
-            path: '/detail/sub2',
-            name: '二级页面',
-            icon: <SmileOutlined />,
-            children: [
-              {
-                path: '/detail/sub2/sub3',
-                name: '2-1级页面',
-                icon: <SmileOutlined />,
-                component: () => import('@/pages/jianjian/index'),
-                meta: {
-                  access: 'detail/sub2',
-                },
-              },
-            ],
+            path: '/jianjian/2',
+            name: 'jianjian2',
+            element: lazyLoad(<Jianjian2 />),
+          },
+          {
+            path: '/jianjian/3',
+            name: 'jianjian3',
+            element: lazyLoad(<Jianjian2 />),
+          },
+          {
+            path: '/jianjian',
+            parentKeys: ['/jianjian/1'],
+            element: <Navigate to="/jianjian/1" />,
           },
         ],
-      },
-      {
-        path: '/403',
-        element: <NoPermission />,
-      },
-      {
-        path: '/404',
-        element: <NoFound />,
       },
     ],
   },
   {
-    path: '/bigScreen',
-    icon: <SmileOutlined />,
-    component: () => import('@/pages/jianjian/index'),
-  },
-  {
     path: '/login',
-    element: <Login />,
-    // component: () => import('@/pages/login/index'),
+    element: lazyLoad(<Login />),
   },
 ]
+
+// https://gitee.com/hollyWork/react-router-dom6-user-manage-center/repository/archive/master.zip

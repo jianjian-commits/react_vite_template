@@ -17,8 +17,10 @@ export default () => {
   const [pathname, setPathname] = useState(location.pathname)
 
   useEffect(() => {
-    setPathname(location.pathname)
+    // setPathname(location.pathname)
   }, [location.pathname])
+
+  console.log(routersToMenus(routes))
 
   return (
     <div
