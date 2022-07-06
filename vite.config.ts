@@ -37,13 +37,18 @@ export default defineConfig({
       },
     ],
   },
+  // ant样式变量 https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
   css: {
     preprocessorOptions: {
       less: {
         // 不配置这个引入 procomponents报样式错
         javascriptEnabled: true,
         modifyVars: {
-          '@primary-color': '#ff18c4', //设置antd主题色
+          '@primary-color': '#005ce6',
+          '@border-radius-base': '4px',
+          '@heading-color': '#ff18c4',
+          '@link-color': '#ff18c4',
+          '@border-color-base': '#edf1f6',
         },
       },
     },
