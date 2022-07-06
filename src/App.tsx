@@ -1,5 +1,6 @@
 import { BrowserRouter, Outlet } from 'react-router-dom'
 import { routes } from '../config'
+import { message } from 'antd'
 import 'antd/dist/antd.css'
 import '@ant-design/pro-components/dist/components.css'
 import RouterWaiter from './routers'
@@ -16,6 +17,10 @@ const App = () => {
     return (state as any).globalReducer
   })
   console.log(userInfo, 'userInfo....')
+
+  message.config({
+    maxCount: 1,
+  })
 
   useEffect(() => {
     // fetchUserInfo({}).then((res: any) => {

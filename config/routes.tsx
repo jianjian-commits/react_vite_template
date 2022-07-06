@@ -36,7 +36,7 @@ export const routes: RoutesType = [
       {
         path: '/detail',
         icon: <SmileOutlined />,
-        name: '详情',
+        name: '异步',
         children: [
           {
             path: '/detail/sub',

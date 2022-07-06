@@ -52,12 +52,12 @@ export default defineConfig({
     },
   },
   server: {
-    // proxy: {
-    //   "/api": {
-    //     target: "http://localhost:8080",
-    //     secure: false,
-    //     rewrite: path => path.replace(/^\/api/, ""),
-    //   },
-    // },
+    proxy: {
+      '/api': {
+        target: 'https://edge-api.meiqia.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
 })

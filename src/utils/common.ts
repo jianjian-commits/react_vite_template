@@ -61,4 +61,57 @@ const flatten = (arr: any[]): any[] => {
   }, [])
 }
 
-export { getDataType, getRoutePath, getQueryObject }
+/**
+ * @description: 判断是否是NaN
+ * @param {any} val 任意数据类型的数据
+ * @return {boolean}
+ */
+const judgeNaN = (val: any) => {
+  return typeof val === 'number' && !(val >= 0) && !(val <= 0)
+}
+
+/**
+ * @description: 对象数据过滤（过滤后端无法识别的无效值：undefined, NaN, null）
+ * @param {object} obj 对象数据
+ * @return {object}
+ */
+const filterObject = (obj: any) => {
+  const isValid = function (val: any) {
+    return val !== undefined && !judgeNaN(val) && val !== null
+  }
+  const newObj: any = {}
+  Object.keys(obj).forEach(function (v) {
+    const val = obj[v]
+    if (isValid(val)) {
+      newObj[v] = val
+    }
+  })
+  return newObj
+}
+
+/**
+ * @description: 对象参数序列化（过滤undefined和NaN,自动encode）
+ * @param {object} obj 对象参数
+ * @return {string} a=1&b=2&c=3
+ */
+const objToUrlParams = (obj: any) => {
+  let str = ''
+  Object.keys(obj).forEach(function (v) {
+    const val = obj[v]
+    if (val !== undefined && !judgeNaN(val)) {
+      str += ''
+        .concat(encodeURIComponent(v), '=')
+        .concat(encodeURIComponent(val), '&')
+    }
+  })
+  return str.slice(0, -1)
+}
+
+export {
+  getDataType,
+  getRoutePath,
+  getQueryObject,
+  filterObject,
+  judgeNaN,
+  objToUrlParams,
+}
