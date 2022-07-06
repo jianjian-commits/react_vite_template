@@ -52,4 +52,13 @@ const getQueryObject = (url?: string) => {
   return obj
 }
 
+// 将路由扁平化
+const flatten = (arr: any[]): any[] => {
+  return arr.reduce(function (prev, cur) {
+    return prev.concat(
+      Array.isArray(cur.children) ? flatten(cur.children) : cur
+    )
+  }, [])
+}
+
 export { getDataType, getRoutePath, getQueryObject }

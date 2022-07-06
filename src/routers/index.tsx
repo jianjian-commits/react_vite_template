@@ -14,7 +14,6 @@ const RouterWaiter: React.FC<RouterWaiterPropsType> = ({
     onRouteBefore,
     loading,
   })
-  console.log(reactRoutes.transformRoutes())
 
   const elements = useRoutes(reactRoutes.transformRoutes() as RouteObject[])
 

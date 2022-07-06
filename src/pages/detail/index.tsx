@@ -1,4 +1,6 @@
 const Detail = () => {
+  console.log('detail..........')
+
   return <div>Detail</div>
 }
 

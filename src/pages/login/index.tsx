@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { getRoutePath, getQueryObject } from '@/utils'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUserInfo } from '@/store/globalReducer'
+import { setUserInfo, setToken } from '@/store/globalReducer'
 import './index.less'
 
 export const fetchUserInfo = (params?: any) => {
@@ -13,7 +13,7 @@ export const fetchUserInfo = (params?: any) => {
       resolve({
         token: '123456789',
         ...params,
-        hasPermission: ['home', 'detail/sub2'],
+        hasPermission: ['home', 'detail/sub1'],
       })
     }, 2000)
   })
@@ -39,6 +39,9 @@ const Login = () => {
       })
       .then((data) => {
         dispatch(setUserInfo(data))
+        dispatch(setToken((data as any).token))
+        localStorage.setItem('userInfo', JSON.stringify(data))
+        localStorage.setItem('token', JSON.stringify(123456789))
         if (redirectUrl) {
           const path = getRoutePath(redirectUrl, true)
           navigate(path)

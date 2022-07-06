@@ -7,7 +7,7 @@ import {
 import type { MenuProps } from 'antd'
 import { Avatar, Menu, Spin } from 'antd'
 import { useDispatch } from 'react-redux'
-import { clearUserInfo } from '@/store/globalReducer'
+import { clearUserInfo, clearUserToken } from '@/store/globalReducer'
 import HeaderDropdown from '../HeaderDropdown'
 import styles from './index.module.less'
 
@@ -37,6 +37,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       if (key === 'logout') {
         // setInitialState((s) => ({ ...s, currentUser: undefined }));
         dispatch(clearUserInfo())
+        dispatch(clearUserToken())
+        localStorage.clear()
         loginOut()
         return
       }

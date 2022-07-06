@@ -18,31 +18,6 @@ export default class RouteConfig {
   /**
    * @description: 将路由配置列表数据转换为react-router-dom能需要的数据格式
    */
-  // transformRoutes(routeList = this.routes) {
-  //   return _.map(routeList, (route) => {
-  //     const newRoute: RoutesItemType = { ...route }
-  //     if (!newRoute.path) {
-  //       return
-  //     }
-  //     if (newRoute.redirect) {
-  //       newRoute.element = <Navigate to={newRoute.redirect} replace={true} />
-  //     } else if (newRoute.component) {
-  //       newRoute.element = this.lazyLoad(
-  //         newRoute.component,
-  //         newRoute.meta || {}
-  //       )
-  //     }
-  //     delete newRoute.redirect
-  //     delete newRoute.component
-  //     delete newRoute.meta
-  //     if (newRoute.children) {
-  //       newRoute.children = this.transformRoutes(
-  //         newRoute.children
-  //       ) as RoutesItemType[]
-  //     }
-  //     return newRoute
-  //   })
-  // }
   transformRoutes(routeList = this.routes) {
     const list: RoutesItemType[] = []
     routeList.forEach((route) => {
