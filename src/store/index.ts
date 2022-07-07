@@ -13,6 +13,14 @@ const store = configureStore({
     globalReducer,
     detailReducer,
   },
+  // 解决 A non-serializable value was detected in an action,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
 
 export default store
+
+export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>

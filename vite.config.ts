@@ -5,7 +5,14 @@ import { resolve } from 'path'
 import legacy from '@vitejs/plugin-legacy'
 // 组件样式按需导入
 import { createStyleImportPlugin, AntdResolve } from 'vite-plugin-style-import'
+// 压缩文件
+// import viteCompression from 'vite-plugin-compression'
+import { visualizer } from 'rollup-plugin-visualizer'
 
+import buildConfig from './config/build'
+
+// TODO 区分dev 还是 build 分别使用不同的插件
+// TODO build时候loadsh包过大 500+k，进行懒加载
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -15,6 +22,7 @@ export default defineConfig({
       resolves: [AntdResolve()],
       libs: [
         {
+          // 样式按需导入  优化！！
           libraryName: 'antd',
           esModule: true,
           resolveStyle: (name) => {
@@ -22,6 +30,12 @@ export default defineConfig({
           },
         },
       ],
+    }),
+    // viteCompression({
+    //   deleteOriginFile: true,
+    // }),
+    visualizer({
+      open: true,
     }),
   ],
   resolve: {
@@ -57,6 +71,7 @@ export default defineConfig({
     },
   },
   server: {
+    open: true,
     proxy: {
       '/api': {
         target: 'https://edge-api.meiqia.com',
@@ -64,5 +79,8 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
+  },
+  build: {
+    ...buildConfig,
   },
 })

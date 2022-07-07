@@ -1,7 +1,8 @@
 import { BrowserRouter, Outlet } from 'react-router-dom'
 import { routes } from '../config'
 import { message } from 'antd'
-import 'antd/dist/antd.css'
+// 不需要导入所有antd样式， vite按需导入了
+// import 'antd/dist/antd.css'
 import '@ant-design/pro-components/dist/components.css'
 import RouterWaiter from './routers'
 import { OnRouteBeforeType } from './routers/typings'

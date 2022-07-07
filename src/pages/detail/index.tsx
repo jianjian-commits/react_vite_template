@@ -2,17 +2,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'antd'
 import { fetchUserById } from './reducer'
 import { requestDetail } from '@/api/detail'
+import { useAppDispatch, useAppSelector } from '../hooks/useDispatch'
 
 const Detail = () => {
-  const dispatch = useDispatch()
-
-  const { loading, detailData } = useSelector((state) => {
-    console.log((state as any).detailReducer)
-    return (state as any).detailReducer
+  const dispatch = useAppDispatch()
+  const { loading, detailData } = useAppSelector((state) => {
+    console.log(state.detailReducer)
+    return state.detailReducer
   })
 
   const requestData = () => {
-    dispatch(fetchUserById(22222))
+    dispatch(fetchUserById())
   }
 
   const fetchData = async () => {

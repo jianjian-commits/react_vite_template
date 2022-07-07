@@ -10,7 +10,7 @@ const requestData = () => {
 
 export const fetchUserById = createAsyncThunk(
   'detail/aa',
-  async (query: number) => {
+  async (args, thunkAPI) => {
     const data = await requestData()
     return data
   }
